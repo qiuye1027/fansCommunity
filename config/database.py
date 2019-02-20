@@ -3,6 +3,18 @@ from config import config
 import re
 import json
 
+def table_exists(con,table_name):
+    sql = "show tables;"
+    con.execute(sql)
+    tables = [con.fetchall()]
+    table_list = re.findall('(\'.*?\')',str(tables))
+    table_list = [re.sub("'",'',each) for each in table_list]
+    if table_name in table_list:
+        return 1
+    else:
+        return 0
+
+
 def insertData(jsonData):
 
 
@@ -38,15 +50,30 @@ def insertData(jsonData):
     cursor.close()
     conn.close()
 
-def table_exists(con,table_name):
-    sql = "show tables;"
-    con.execute(sql)
-    tables = [con.fetchall()]
-    table_list = re.findall('(\'.*?\')',str(tables))
-    table_list = [re.sub("'",'',each) for each in table_list]
-    if table_name in table_list:
-        return 1
-    else:
-        return 0
+def insertDataWeibo(jsonData):
+
+
+    conn = mysql.connector.connect(
+        user=config.DB_CONFIG['NAME'],
+        password=config.DB_CONFIG['PASSWORD'],
+        database='screenDB',
+        use_unicode=True,
+
+    )
+
+    cursor = conn.cursor()
+
+    if table_exists(cursor, 'crawlerDataWeibo') == 0:
+
+        cursor.execute(
+        'CREATE TABLE `screenDB`.`crawlerDataWeibo` ( `index` int(255) NOT NULL AUTO_INCREMENT, `title` varchar(255), `rank` varchar(255), `numbers` varchar(255)  CHARACTER SET utf8, `hrefs` varchar(255) CHARACTER SET utf8, PRIMARY KEY (`index`)) COMMENT=""')
+
+
+    cursor.execute('insert into `screenDB`.`crawlerDataWeibo` (title, rank,numbers, hrefs) values (%s, %s, %s, %s)', [jsonData['title'], jsonData['rank'], jsonData['number'], jsonData['href']])
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 # insertData({'user': 'kelle001', 'source': '比亚迪F3论坛', 'useful': 1034, 'type': '好评', 'comment': '油耗及性价比空间还有操控绝对满意'})
