@@ -1,3 +1,5 @@
+# 微博热搜
+
 import urllib
 import urllib.request
 from bs4 import BeautifulSoup
