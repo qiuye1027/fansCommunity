@@ -1,0 +1,4 @@
+<<Tensorflow 实战google深度学习框架--第二版>> 
+源代码和数据链接：
+https://github.com/caicloud/tensorflow-tutorial/tree/master/Deep_Learning_with_TensorFlow/1.4.0
+https://github.com/caicloud/tensorflow-tutorial/tree/master/Deep_Learning_with_TensorFlow/datasets

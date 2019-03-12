@@ -63,7 +63,8 @@ firefox_headers = {
 
 for index in range(500):
 
-
+    time.sleep(5)
+    print(index)
     url_TT = 'https://www.toutiao.com/api/pc/feed/?category=news_hot&utm_source=toutiao&widen=1&max_behot_time=0&max_behot_time_tmp=1551957389&tadrequire=true&as=A1350C88A09FDF6&cp=5C801F1D5F760E1&_signature=NfDJfQAAaXaKhjiboxhFojXwyW'
 
     request = Request( url_TT, headers=firefox_headers  )
